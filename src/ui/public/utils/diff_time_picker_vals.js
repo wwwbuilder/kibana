@@ -14,6 +14,7 @@ define(function (require) {
           || valueOf(rangeA.from) !== valueOf(rangeB.from)
           || valueOf(rangeA.value) !== valueOf(rangeB.value)
           || valueOf(rangeA.pause) !== valueOf(rangeB.pause)
+          || valueOf(rangeA.checkpoint) !== valueOf(rangeB.checkpoint)
         ) {
           return true;
         }

@@ -17,6 +17,8 @@ define(function (require) {
     var DelayedUpdater = Private(require('ui/config/_delayed_updater'));
     var vals = Private(require('ui/config/_vals'));
 
+    var silentConfigNames = ['dateFormat:tz'];
+
     var notify = new Notifier({
       location: 'Config'
     });
@@ -78,7 +80,12 @@ define(function (require) {
 
     config.get = function (key, defaultVal) {
       var keyVal;
-
+      if (silentConfigNames.indexOf(key) > -1) {
+        keyVal = window.localStorage.getItem(key);
+        if (keyVal) {
+          return keyVal;
+        }
+      }
       if (vals[key] == null) {
         if (defaultVal == null) {
           keyVal = defaults[key].value;
@@ -97,6 +104,9 @@ define(function (require) {
 
     // sets a value in the config
     config.set = function (key, val) {
+      if (silentConfigNames.indexOf(key) > -1) {
+        window.localStorage.setItem(key, val);
+      }
       if (_.isPlainObject(val)) {
         return change(key, angular.toJson(val));
       } else {
@@ -142,12 +152,13 @@ define(function (require) {
      * PRIVATE API
      *****/
     function change(key, val, silentAndLocal) {
+      var silent = silentAndLocal || (silentConfigNames.indexOf(key) > -1);
       // if the previous updater has already fired, then start over with null
       if (updater && updater.fired) updater = null;
       // create a new updater
       if (!updater) updater = new DelayedUpdater(doc);
       // return a promise that will be resolved once the action is eventually done
-      return updater.update(key, val, silentAndLocal);
+      return updater.update(key, val, silent);
     }
 
     config._vals = function () {

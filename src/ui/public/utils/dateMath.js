@@ -18,9 +18,10 @@ define(function (require) {
     var mathString = '';
     var index;
     var parseString;
+    var tz = window.activeTZ;
 
     if (text.substring(0, 3) === 'now') {
-      time = moment();
+      time = moment.tz(tz);
       mathString = text.substring('now'.length);
     } else {
       index = text.indexOf('||');
@@ -32,7 +33,7 @@ define(function (require) {
         mathString = text.substring(index + 2);
       }
       // We're going to just require ISO8601 timestamps, k?
-      time = moment(parseString);
+      time = moment.tz(parseString, tz);
     }
 
     if (!mathString.length) {

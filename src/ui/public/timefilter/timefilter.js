@@ -66,7 +66,8 @@ define(function (require) {
         '$$timefilter.time',
         '$$timefilter.time.from',
         '$$timefilter.time.to',
-        '$$timefilter.time.mode'
+        '$$timefilter.time.mode',
+        '$$timefilter.time.checkpoint'
       ], diffTime);
 
       $rootScope.$watchMulti([
@@ -98,6 +99,18 @@ define(function (require) {
         min: dateMath.parse(this.time.from),
         max: dateMath.parse(this.time.to, true)
       };
+      // var activetz = config.get('dateFormat:tz');
+      // if (this.time.to === 'now') {
+      //   return {
+      //     min: dateMath.parse(this.time.from),
+      //     max: dateMath.parse(this.time.to, true)
+      //   };
+      // } else {
+      //   return {
+      //     min: moment.tz(dateMath.parse(this.time.from).format('YYYY-MM-DD HH:mm:ss'), activetz).valueOf(),
+      //     max: moment.tz(dateMath.parse(this.time.to, true).format('YYYY-MM-DD HH:mm:ss'), activetz).valueOf()
+      //   };
+      // }
     };
 
     Timefilter.prototype.getActiveBounds = function () {
