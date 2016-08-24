@@ -181,6 +181,11 @@ define(function (require) {
         value: 5,
         description: 'Number of objects to show per page in the load dialog'
       },
+      'timepicker:activetz': {
+        type: 'string',
+        value: 'Etc/GMT0',
+        description: 'timezone'
+      },
       'timepicker:timeDefaults': {
         type: 'json',
         value: [

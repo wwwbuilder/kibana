@@ -94,10 +94,16 @@ define(function (require) {
     };
 
     Timefilter.prototype.getBounds = function (timefield) {
+      const activetz = config.get('timepicker:activetz');
+      console.log('-----activetz------', activetz);
       return {
-        min: dateMath.parse(this.time.from),
-        max: dateMath.parse(this.time.to, true)
+        min: dateMath.parse(moment.tz(moment(this.time.from).format('YYYY-MM-DD HH:mm:ss'), activetz)),
+        max: dateMath.parse(moment.tz(moment(this.time.to).format('YYYY-MM-DD HH:mm:ss'), activetz), true),
       };
+      // return {
+      //   min: dateMath.parse(this.time.from),
+      //   max: dateMath.parse(this.time.to, true)
+      // };
     };
 
     Timefilter.prototype.getActiveBounds = function () {
