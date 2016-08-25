@@ -50,6 +50,11 @@ define(function (require) {
         // event/notifications/writes from occuring.
         var applyMassUpdate = function (resp, silentAndLocal) {
           _.union(_.keys(resp._source), _.keys(vals)).forEach(function (key) {
+            // if (window.localStorage.getItem(key)) {
+            //   change(key, window.localStorage.getItem(key), silentAndLocal);
+            // } else {
+            //   change(key, resp._source[key], silentAndLocal);
+            // }
             change(key, resp._source[key], silentAndLocal);
           });
         };
