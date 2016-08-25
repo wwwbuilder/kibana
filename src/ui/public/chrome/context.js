@@ -33,9 +33,10 @@ define(function (require) {
             value: zone
           });
         });
-        var initialZoneIndex = 0, activetz = config.get('timepicker:activetz');
-        $scope.timezones.forEach(function (zone, idx){
-          if (zone.name == activetz) {
+        var initialZoneIndex = 0;
+        var activetz = config.get('timepicker:activetz');
+        $scope.timezones.forEach(function (zone, idx) {
+          if (zone.name === activetz) {
             initialZoneIndex = idx;
           }
         });
