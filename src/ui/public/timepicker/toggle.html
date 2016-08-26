@@ -8,6 +8,10 @@
     </a>
   </li>
 
+  <li class="to-body">
+    <select ng-model="currentTimeZone" ng-options="timezone.name as timezone.value for timezone in timezones"></select>
+  </li>
+  
   <li
     ng-class="{active: pickerTemplate.is('interval') }"
     ng-show="timefilter.refreshInterval.value > 0 || !!pickerTemplate.current"

@@ -24,7 +24,8 @@ define(function (require) {
         description: 'When displaying a pretty formatted date, use this format',
       },
       'dateFormat:tz': {
-        value: 'Browser',
+        // value: 'Browser',
+        value: 'Etc/GMT',
         description: 'Which timezone should be used.  "Browser" will use the timezone detected by your browser.',
         type: 'select',
         options: _.union(['Browser'], moment.tz.names())
@@ -202,6 +203,11 @@ define(function (require) {
           '}'
         ].join('\n'),
         description: 'The timefilter\'s default refresh interval'
+      },
+      'timepicker:activetz': {
+        type: 'string',
+        value: 'Etc/GMT0',
+        description: 'timezone'
       },
       'dashboard:defaultDarkTheme': {
         value: false,

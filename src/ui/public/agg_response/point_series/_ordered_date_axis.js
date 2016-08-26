@@ -6,9 +6,10 @@ define(function (require) {
       var xAgg = chart.aspects.x.agg;
       var buckets = xAgg.buckets;
       var format = buckets.getScaledDateFormat();
+      var tz = buckets.getActiveTZ();
 
       chart.xAxisFormatter = function (val) {
-        return moment(val).format(format);
+        return moment.tz(val, tz).format(format);
       };
 
       chart.ordered = {

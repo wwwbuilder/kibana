@@ -83,21 +83,44 @@ define(function (require) {
       if (timefield) {
         var bounds = this.getBounds();
         filter = {range : {}};
-        filter.range[timefield.name] = {
-          gte: bounds.min.valueOf(),
-          lte: bounds.max.valueOf(),
-          format: 'epoch_millis'
-        };
+        if (this.time.to === 'now') {
+          filter.range[timefield.name] = {
+            gte: bounds.min.valueOf(),
+            lte: bounds.max.valueOf(),
+            format: 'epoch_millis'
+          };
+        } else {
+          var activetz = config.get('timepicker:activetz');
+          filter.range[timefield.name] = {
+            // gte: moment.tz(bounds.min.format('YYYY-MM-DD HH:mm:ss'), activetz).valueOf(),
+            // lte: moment.tz(bounds.max.format('YYYY-MM-DD HH:mm:ss'), activetz).valueOf(),
+            gte: bounds.min.valueOf(),
+            lte: bounds.max.valueOf(),
+            format: 'epoch_millis'
+          };
+        }
       }
 
       return filter;
     };
 
     Timefilter.prototype.getBounds = function (timefield) {
-      return {
-        min: dateMath.parse(this.time.from),
-        max: dateMath.parse(this.time.to, true)
-      };
+      // return {
+      //   min: dateMath.parse(this.time.from),
+      //   max: dateMath.parse(this.time.to, true)
+      // };
+      var activetz = config.get('timepicker:activetz');
+      if (this.time.to === 'now') {
+        return {
+          min: dateMath.parse(this.time.from),
+          max: dateMath.parse(this.time.to, true)
+        };
+      } else {
+        return {
+          min: moment.tz(dateMath.parse(this.time.from).format('YYYY-MM-DD HH:mm:ss'), activetz).valueOf(),
+          max: moment.tz(dateMath.parse(this.time.to, true).format('YYYY-MM-DD HH:mm:ss'), activetz).valueOf()
+        };
+      }
     };
 
     Timefilter.prototype.getActiveBounds = function () {

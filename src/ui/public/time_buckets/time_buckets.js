@@ -275,6 +275,10 @@ define(function (require) {
       return config.get('dateFormat');
     };
 
+    TimeBuckets.prototype.getActiveTZ = function () {
+      return config.get('timepicker:activetz');
+    };
+
 
     TimeBuckets.__cached__ = function (self) {
       var cache = {};

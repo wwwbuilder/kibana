@@ -50,7 +50,12 @@ define(function (require) {
         // event/notifications/writes from occuring.
         var applyMassUpdate = function (resp, silentAndLocal) {
           _.union(_.keys(resp._source), _.keys(vals)).forEach(function (key) {
-            change(key, resp._source[key], silentAndLocal);
+            // change(key, resp._source[key], silentAndLocal);
+            if (window.localStorage.getItem(key)) {
+              change(key, window.localStorage.getItem(key), silentAndLocal);
+            } else {
+              change(key, resp._source[key], silentAndLocal);
+            }
           });
         };
 
@@ -97,10 +102,11 @@ define(function (require) {
 
     // sets a value in the config
     config.set = function (key, val) {
+      var silentAndLocal = key === 'timepicker:activetz';
       if (_.isPlainObject(val)) {
-        return change(key, angular.toJson(val));
+        return change(key, angular.toJson(val), silentAndLocal);
       } else {
-        return change(key, val);
+        return change(key, val, silentAndLocal);
       }
     };
 

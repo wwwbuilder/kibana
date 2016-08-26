@@ -315,7 +315,7 @@ define(function (require) {
           .style('stroke-width', 1);
 
           if (addTimeMarker) {
-            timeMarker.render(svg);
+            // timeMarker.render(svg);
           }
 
           return svg;
